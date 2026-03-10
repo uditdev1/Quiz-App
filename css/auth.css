@@ -33,6 +33,11 @@ button {
     box-sizing: border-box;
 }
 
+button:hover {
+    transform: translateY(-2px);
+    transition: 0.3s ease;
+}
+
 input {
     border: 1px solid #ccc;
 }
