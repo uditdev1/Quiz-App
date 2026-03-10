@@ -1,3 +1,9 @@
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user) {
+    window.location.href = "login.html";
+}
+
 const question=document.getElementById("question");
 const options=document.getElementById("options");
 const nextBtn=document.getElementById("nextBtn");
