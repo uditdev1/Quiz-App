@@ -23,7 +23,7 @@ function login() {
 
     if (user.email === email && user.password === password) {
         alert("Login successful");
-        window.location.href = "index.html";
+        window.location.href = "games.html";
     } else {
         alert("Invalid credentials");
     }
