@@ -104,6 +104,9 @@ showResult();
 
 function showResult(){
 
+localStorage.setItem("lastScore", score);
+localStorage.setItem("totalQuiz", current);
+
 question.innerText="Quiz Completed 🎉";
 options.innerHTML="";
 nextBtn.style.display="none";
