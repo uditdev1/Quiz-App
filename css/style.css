@@ -178,13 +178,16 @@ color:#013220;
 }
 
 .games-header {
+    position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: 30px;
 }
 
 .games-header button {
+    position: absolute;
+    right: 0;
     padding: 10px 18px;
     background: #013220;
     color: white;
