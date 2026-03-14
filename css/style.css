@@ -244,3 +244,8 @@ color:#013220;
 .stat-card p {
     color: #666;
 }
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    transition: 0.3s ease;
+}
