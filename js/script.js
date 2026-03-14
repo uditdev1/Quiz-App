@@ -105,7 +105,7 @@ showResult();
 function showResult(){
 
 localStorage.setItem("lastScore", score);
-localStorage.setItem("totalQuiz", current);
+localStorage.setItem("totalQuiz", questions.length);
 
 question.innerText="Quiz Completed 🎉";
 options.innerHTML="";
