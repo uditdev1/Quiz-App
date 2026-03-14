@@ -183,6 +183,8 @@ color:#013220;
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
+    font-size: 32px;
+    font-weight: 700;
 }
 
 .games-header button {
