@@ -13,6 +13,9 @@ localStorage.getItem("totalQuiz") || 0;
 document.getElementById("lastScore").innerText =
 localStorage.getItem("lastScore") || 0;
 
+document.getElementById("lastGame").innerText =
+localStorage.getItem("lastGame") || "General Quiz";
+
 function logout() {
     localStorage.removeItem("user");
     window.location.href = "login.html";

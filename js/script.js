@@ -106,6 +106,7 @@ function showResult(){
 
 localStorage.setItem("lastScore", score);
 localStorage.setItem("totalQuiz", questions.length);
+localStorage.setItem("lastGame", "General Quiz");
 
 question.innerText="Quiz Completed 🎉";
 options.innerHTML="";
