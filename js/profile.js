@@ -20,3 +20,6 @@ function logout() {
     localStorage.removeItem("user");
     window.location.href = "login.html";
 }
+
+document.getElementById("lastGame").innerText =
+localStorage.getItem("lastGame") || "General Quiz";
