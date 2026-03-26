@@ -163,6 +163,10 @@ color:#013220;
     transform: translateY(-8px);
     box-shadow: 0 18px 35px rgba(0,0,0,0.15);
 }
+    .game-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 35px rgba(0,0,0,0.15);
+}
 }
 
 .game-card img {
