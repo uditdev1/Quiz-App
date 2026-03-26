@@ -259,3 +259,8 @@ color:#013220;
     transform: translateY(-4px);
     transition: 0.3s ease;
 }
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
