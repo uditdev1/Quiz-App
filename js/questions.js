@@ -40,13 +40,13 @@ options:[
 answer:"JavaScript"
 },
 {
-// question:"Which database is a NoSQL database?",
-// options:[
-// "MySQL",
-// "PostgreSQL",
-// "MongoDB",
-// "Oracle"
-// ],
-// answer:"MongoDB"
-// }
+question:"Which database is a NoSQL database?",
+options:[
+"MySQL",
+"PostgreSQL",
+"MongoDB",
+"Oracle"
+],
+answer:"MongoDB"
+}
 ];
