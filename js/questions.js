@@ -28,5 +28,25 @@ options:[
 "C"
 ],
 answer:"JavaScript"
+},
+{
+question:"Which language is used for backend development in Node.js?",
+options:[
+"Python",
+"JavaScript",
+"Ruby",
+"C#"
+],
+answer:"JavaScript"
+},
+{
+question:"Which database is a NoSQL database?",
+options:[
+"MySQL",
+"PostgreSQL",
+"MongoDB",
+"Oracle"
+],
+answer:"MongoDB"
 }
 ];
