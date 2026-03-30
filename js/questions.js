@@ -58,5 +58,15 @@ options:[
 "<hyper>"
 ],
 answer:"<a>"
+},
+{
+question:"Which CSS property is used to change text color?",
+options:[
+"background-color",
+"color",
+"font-style",
+"text-align"
+],
+answer:"color"
 }
 ];
