@@ -48,5 +48,15 @@ options:[
 "Oracle"
 ],
 answer:"MongoDB"
+},
+{
+question:"Which HTML tag is used to create a hyperlink?",
+options:[
+"<a>",
+"<link>",
+"<href>",
+"<hyper>"
+],
+answer:"<a>"
 }
 ];
