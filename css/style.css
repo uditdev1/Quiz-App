@@ -264,3 +264,20 @@ color:#013220;
     display: flex;
     gap: 10px;
 }
+
+.activity-section {
+    margin-top: 40px;
+}
+
+.activity-section h2 {
+    color: #013220;
+    margin-bottom: 20px;
+}
+
+.activity-card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.08);
+}
