@@ -23,3 +23,21 @@ function logout() {
 
 document.getElementById("lastGame").innerText =
 localStorage.getItem("lastGame") || "General Quiz";
+
+const activityList = document.getElementById("activityList");
+const history = JSON.parse(localStorage.getItem("quizHistory")) || [];
+
+activityList.innerHTML = "";
+
+history.slice().reverse().forEach(item => {
+    let div = document.createElement("div");
+    div.classList.add("activity-card");
+
+    div.innerHTML = `
+        <strong>${item.quiz}</strong><br>
+        Score: ${item.score}<br>
+        Date: ${item.date}
+    `;
+
+    activityList.appendChild(div);
+});
