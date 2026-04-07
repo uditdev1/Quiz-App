@@ -41,3 +41,35 @@ history.slice().reverse().forEach(item => {
 
     activityList.appendChild(div);
 });
+
+const history = JSON.parse(localStorage.getItem("quizHistory")) || [];
+
+const labels = history.map(item => item.date);
+const scores = history.map(item => {
+    return parseInt(item.score.split("/")[0]);
+});
+
+const ctx = document.getElementById("scoreChart");
+
+new Chart(ctx, {
+    type: "line",
+    data: {
+        labels: labels,
+        datasets: [{
+            label: "Quiz Scores",
+            data: scores,
+            borderColor: "#013220",
+            backgroundColor: "rgba(1,50,32,0.1)",
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true
+            }
+        }
+    }
+});
