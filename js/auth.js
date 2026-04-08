@@ -1,35 +1,17 @@
-// SIGNUP FUNCTION
-function signup() {
-    const name = document.getElementById("signupName").value.trim();
-    const email = document.getElementById("signupEmail").value.trim();
-    const password = document.getElementById("signupPassword").value.trim();
+function login() {
+    const emailInput = document.getElementById("loginEmail");
+    const passwordInput = document.getElementById("loginPassword");
 
-    if (!name || !email || !password) {
-        alert("Please fill all fields");
+    if (!emailInput || !passwordInput) {
+        alert("Input fields not found!");
         return;
     }
 
-    const user = {
-        name,
-        email,
-        password
-    };
-
-    localStorage.setItem("user", JSON.stringify(user));
-
-    alert("Signup successful");
-    window.location.href = "login.html";
-}
-
-
-// LOGIN FUNCTION
-function login() {
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value.trim();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
 
     const user = JSON.parse(localStorage.getItem("user"));
 
-   
     if (!user) {
         alert("No user found. Please signup first.");
         return;
