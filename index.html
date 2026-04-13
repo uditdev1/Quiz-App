@@ -1,40 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Premium Quiz App</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-<div class="quiz-wrapper">
-  <div class="quiz-card">
+  <div class="quiz-wrapper">
+    <div class="quiz-card">
 
-    <div class="top-section">
-      <h1>Quiz App</h1>
-      <div class="timer" id="timer">15</div>
+      <div class="stat-card">
+        <h2 id="userBadge">Beginner 🐣</h2>
+        <p>Badge</p>
+      </div>
+
+      <div class="top-section">
+        <h1>Quiz App</h1>
+        <div class="timer" id="timer">15</div>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+
+      <div class="question-count" id="questionCount"></div>
+
+      <div class="question" id="question"></div>
+
+      <div class="options" id="options"></div>
+
+      <button id="nextBtn">Next Question</button>
+
+      <div class="result" id="result"></div>
+
     </div>
-
-    <div class="progress-bar">
-      <div class="progress" id="progress"></div>
-    </div>
-
-    <div class="question-count" id="questionCount"></div>
-
-    <div class="question" id="question"></div>
-
-    <div class="options" id="options"></div>
-
-    <button id="nextBtn">Next Question</button>
-
-    <div class="result" id="result"></div>
-
   </div>
-</div>
 
-<script src="js/questions.js"></script>
-<script src="js/script.js"></script>
+  <script src="js/questions.js"></script>
+  <script src="js/script.js"></script>
 
 </body>
+
 </html>
