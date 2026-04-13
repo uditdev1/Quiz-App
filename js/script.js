@@ -1,7 +1,7 @@
 const user = JSON.parse(localStorage.getItem("user"));
 
 if (!user) {
-    window.location.href = "login.html";
+  window.location.href = "login.html";
 }
 
 const question = document.getElementById("question");
@@ -23,115 +23,121 @@ let interval;
 let answered = false;
 
 function loadQuestion() {
+  clearInterval(interval);
+  answered = false;
 
-    clearInterval(interval);
-    answered = false;
+  let q = questions[current];
 
-    let q = questions[current];
+  question.innerText = q.question;
+  questionCount.innerText = `Question ${current + 1} of ${questions.length}`;
+  options.innerHTML = "";
+  result.innerText = "";
 
-    question.innerText = q.question;
-    questionCount.innerText = `Question ${current + 1} of ${questions.length}`;
-    options.innerHTML = "";
-    result.innerText = "";
+  q.options.forEach((option) => {
+    let btn = document.createElement("button");
+    btn.innerText = option;
+    btn.classList.add("option");
 
-    q.options.forEach(option => {
-        let btn = document.createElement("button");
-        btn.innerText = option;
-        btn.classList.add("option");
+    btn.onclick = () => selectAnswer(btn, option, q.answer);
 
-        btn.onclick = () => selectAnswer(btn, option, q.answer);
+    options.appendChild(btn);
+  });
 
-        options.appendChild(btn);
-    });
+  progress.style.width = `${((current + 1) / questions.length) * 100}%`;
 
-    progress.style.width = `${((current + 1) / questions.length) * 100}%`;
-
-    startTimer();
+  startTimer();
 }
 
 function selectAnswer(btn, selected, correct) {
+  if (answered) return;
 
-    if (answered) return;
+  answered = true;
+  clearInterval(interval);
 
-    answered = true;
-    clearInterval(interval);
+  Array.from(options.children).forEach((button) => {
+    button.disabled = true;
 
-    Array.from(options.children).forEach(button => {
-        button.disabled = true;
-
-        if (button.innerText === correct) {
-            button.classList.add("correct");
-        }
-    });
-
-    if (selected === correct) {
-        correctSound.play();
-        score++;
-    } else {
-        wrongSound.play();
-        btn.classList.add("wrong");
+    if (button.innerText === correct) {
+      button.classList.add("correct");
     }
+  });
+
+  if (selected === correct) {
+    correctSound.play();
+    score++;
+  } else {
+    wrongSound.play();
+    btn.classList.add("wrong");
+  }
 }
 
 function startTimer() {
+  time = 15;
+  timer.innerText = time;
 
-    time = 15;
+  interval = setInterval(() => {
+    time--;
     timer.innerText = time;
 
-    interval = setInterval(() => {
-        time--;
-        timer.innerText = time;
-
-        if (time === 0) {
-            clearInterval(interval);
-            nextQuestion();
-        }
-    }, 1000);
+    if (time === 0) {
+      clearInterval(interval);
+      nextQuestion();
+    }
+  }, 1000);
 }
 
 function nextQuestion() {
+  clickSound.play();
 
-    clickSound.play();
+  current++;
 
-    current++;
-
-    if (current < questions.length) {
-        loadQuestion();
-    } else {
-        showResult();
-    }
+  if (current < questions.length) {
+    loadQuestion();
+  } else {
+    showResult();
+  }
 }
 
 function showResult() {
+  // ✅ Save basic data
+  localStorage.setItem("lastScore", score);
+  localStorage.setItem("totalQuiz", questions.length);
+  localStorage.setItem("lastGame", "General Quiz");
 
-    // ✅ Save basic data
-    localStorage.setItem("lastScore", score);
-    localStorage.setItem("totalQuiz", questions.length);
-    localStorage.setItem("lastGame", "General Quiz");
+  // ✅ Activity history (last 5)
+  let history = JSON.parse(localStorage.getItem("quizHistory")) || [];
 
-    // ✅ Activity history (last 5)
-    let history = JSON.parse(localStorage.getItem("quizHistory")) || [];
+  history.push({
+    quiz: "General Quiz",
+    score: `${score}/${questions.length}`,
+    date: new Date().toLocaleDateString(),
+  });
 
-    history.push({
-        quiz: "General Quiz",
-        score: `${score}/${questions.length}`,
-        date: new Date().toLocaleDateString()
-    });
+  let badge = "Beginner 🐣";
 
-    if (history.length > 5) {
-        history.shift();
-    }
+  if (score >= 5) {
+    badge = "Expert 🏆";
+  } else if (score >= 3) {
+    badge = "Intermediate 🚀";
+  }
 
-    localStorage.setItem("quizHistory", JSON.stringify(history));
+  // save badge
+  localStorage.setItem("badge", badge);
 
-    // ✅ UI update
-    question.innerText = "Quiz Completed 🎉";
-    options.innerHTML = "";
-    nextBtn.style.display = "none";
-    timer.style.display = "none";
-    questionCount.style.display = "none";
+  if (history.length > 5) {
+    history.shift();
+  }
 
-    result.innerText = `Your Score: ${score}/${questions.length}`;
+  localStorage.setItem("quizHistory", JSON.stringify(history));
+
+  // ✅ UI update
+  question.innerText = "Quiz Completed 🎉";
+  options.innerHTML = "";
+  nextBtn.style.display = "none";
+  timer.style.display = "none";
+  questionCount.style.display = "none";
+
+  result.innerText = `Your Score: ${score}/${questions.length}`;
 }
 
 nextBtn.onclick = nextQuestion;
