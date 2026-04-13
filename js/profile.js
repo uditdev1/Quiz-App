@@ -7,6 +7,9 @@ if (!user) {
 document.getElementById("profileName").innerText =
 `${user.name}'s Profile`;
 
+document.getElementById("userBadge").innerText =
+localStorage.getItem("badge") || "Beginner 🐣";
+
 document.getElementById("totalQuiz").innerText =
 localStorage.getItem("totalQuiz") || 0;
 
