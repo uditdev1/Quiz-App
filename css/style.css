@@ -295,3 +295,11 @@ color:#013220;
     color: #013220;
     margin-bottom: 20px;
 }
+
+.stat-card {
+    transition: 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
