@@ -19,6 +19,9 @@ localStorage.getItem("lastScore") || 0;
 document.getElementById("lastGame").innerText =
 localStorage.getItem("lastGame") || "General Quiz";
 
+document.getElementById("streakCount").innerText =
+(localStorage.getItem("streak") || 0) + " 🔥";
+
 function logout() {
     localStorage.removeItem("user");
     window.location.href = "login.html";
