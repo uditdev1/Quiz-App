@@ -99,12 +99,12 @@ function nextQuestion() {
 }
 
 function showResult() {
-  // ✅ Save basic data
+  //  Save basic data
   localStorage.setItem("lastScore", score);
   localStorage.setItem("totalQuiz", questions.length);
   localStorage.setItem("lastGame", "General Quiz");
 
-  // ✅ Activity history (last 5)
+  //  Activity history (last 5)
   let history = JSON.parse(localStorage.getItem("quizHistory")) || [];
 
   history.push({
@@ -130,7 +130,7 @@ function showResult() {
 
   localStorage.setItem("quizHistory", JSON.stringify(history));
 
-  // ✅ UI update
+  //  UI update
   question.innerText = "Quiz Completed 🎉";
   options.innerHTML = "";
   nextBtn.style.display = "none";
@@ -138,6 +138,28 @@ function showResult() {
   questionCount.style.display = "none";
 
   result.innerText = `Your Score: ${score}/${questions.length}`;
+
+  // Daily streak system
+  const today = new Date().toLocaleDateString();
+
+  let streak = parseInt(localStorage.getItem("streak")) || 0;
+  let lastPlayedDate = localStorage.getItem("lastPlayedDate");
+
+  if (lastPlayedDate !== today) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const yesterdayDate = yesterday.toLocaleDateString();
+
+    if (lastPlayedDate === yesterdayDate) {
+      streak++;
+    } else {
+      streak = 1;
+    }
+
+    localStorage.setItem("streak", streak);
+    localStorage.setItem("lastPlayedDate", today);
+  }
 }
 
 nextBtn.onclick = nextQuestion;
