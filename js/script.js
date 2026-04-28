@@ -1,7 +1,7 @@
 const user = JSON.parse(localStorage.getItem("user"));
 
 if (!user) {
-  window.location.href = "login.html";
+    window.location.href = "login.html";
 }
 
 const question = document.getElementById("question");
@@ -22,146 +22,209 @@ let time = 15;
 let interval;
 let answered = false;
 
+// LOAD QUESTION
 function loadQuestion() {
-  clearInterval(interval);
-  answered = false;
 
-  let q = questions[current];
+    clearInterval(interval);
+    answered = false;
 
-  question.innerText = q.question;
-  questionCount.innerText = `Question ${current + 1} of ${questions.length}`;
-  options.innerHTML = "";
-  result.innerText = "";
+    let q = questions[current];
 
-  q.options.forEach((option) => {
-    let btn = document.createElement("button");
-    btn.innerText = option;
-    btn.classList.add("option");
+    question.innerText = q.question;
 
-    btn.onclick = () => selectAnswer(btn, option, q.answer);
+    questionCount.innerText =
+        `Question ${current + 1} of ${questions.length}`;
 
-    options.appendChild(btn);
-  });
+    options.innerHTML = "";
+    result.innerHTML = "";
 
-  progress.style.width = `${((current + 1) / questions.length) * 100}%`;
+    q.options.forEach(option => {
 
-  startTimer();
+        let btn = document.createElement("button");
+
+        btn.innerText = option;
+
+        btn.classList.add("option");
+
+        btn.onclick = () =>
+            selectAnswer(btn, option, q.answer);
+
+        options.appendChild(btn);
+    });
+
+    progress.style.width =
+        `${((current + 1) / questions.length) * 100}%`;
+
+    startTimer();
 }
 
+// SELECT ANSWER
 function selectAnswer(btn, selected, correct) {
-  if (answered) return;
 
-  answered = true;
-  clearInterval(interval);
+    if (answered) return;
 
-  Array.from(options.children).forEach((button) => {
-    button.disabled = true;
+    answered = true;
 
-    if (button.innerText === correct) {
-      button.classList.add("correct");
+    clearInterval(interval);
+
+    Array.from(options.children).forEach(button => {
+
+        button.disabled = true;
+
+        if (button.innerText === correct) {
+            button.classList.add("correct");
+        }
+    });
+
+    if (selected === correct) {
+
+        correctSound.play();
+
+        score++;
+
+    } else {
+
+        wrongSound.play();
+
+        btn.classList.add("wrong");
     }
-  });
-
-  if (selected === correct) {
-    correctSound.play();
-    score++;
-  } else {
-    wrongSound.play();
-    btn.classList.add("wrong");
-  }
 }
 
+// TIMER
 function startTimer() {
-  time = 15;
-  timer.innerText = time;
 
-  interval = setInterval(() => {
-    time--;
+    time = 15;
+
     timer.innerText = time;
 
-    if (time === 0) {
-      clearInterval(interval);
-      nextQuestion();
-    }
-  }, 1000);
+    interval = setInterval(() => {
+
+        time--;
+
+        timer.innerText = time;
+
+        if (time === 0) {
+
+            clearInterval(interval);
+
+            nextQuestion();
+        }
+
+    }, 1000);
 }
 
+// NEXT QUESTION
 function nextQuestion() {
-  clickSound.play();
 
-  current++;
+    clickSound.play();
 
-  if (current < questions.length) {
-    loadQuestion();
-  } else {
-    showResult();
-  }
+    current++;
+
+    if (current < questions.length) {
+
+        loadQuestion();
+
+    } else {
+
+        showResult();
+    }
 }
 
+// SHOW RESULT
 function showResult() {
-  //  Save basic data
-  localStorage.setItem("lastScore", score);
-  localStorage.setItem("totalQuiz", questions.length);
-  localStorage.setItem("lastGame", "General Quiz");
 
-  //  Activity history (last 5)
-  let history = JSON.parse(localStorage.getItem("quizHistory")) || [];
+    // SAVE BASIC DATA
+    localStorage.setItem("lastScore", score);
 
-  history.push({
-    quiz: "General Quiz",
-    score: `${score}/${questions.length}`,
-    date: new Date().toLocaleDateString(),
-  });
+    localStorage.setItem("totalQuiz", questions.length);
 
-  let badge = "Beginner 🐣";
+    localStorage.setItem("lastGame", "General Quiz");
 
-  if (score >= 5) {
-    badge = "Expert 🏆";
-  } else if (score >= 3) {
-    badge = "Intermediate 🚀";
-  }
+    // BADGE SYSTEM
+    let badge = "Beginner 🐣";
 
-  // save badge
-  localStorage.setItem("badge", badge);
+    if (score >= 5) {
 
-  if (history.length > 5) {
-    history.shift();
-  }
+        badge = "Expert 🏆";
 
-  localStorage.setItem("quizHistory", JSON.stringify(history));
+    } else if (score >= 3) {
 
-  //  UI update
-  question.innerText = "Quiz Completed 🎉";
-  options.innerHTML = "";
-  nextBtn.style.display = "none";
-  timer.style.display = "none";
-  questionCount.style.display = "none";
-
-  result.innerText = `Your Score: ${score}/${questions.length}`;
-
-  // Daily streak system
-  const today = new Date().toLocaleDateString();
-
-  let streak = parseInt(localStorage.getItem("streak")) || 0;
-  let lastPlayedDate = localStorage.getItem("lastPlayedDate");
-
-  if (lastPlayedDate !== today) {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    const yesterdayDate = yesterday.toLocaleDateString();
-
-    if (lastPlayedDate === yesterdayDate) {
-      streak++;
-    } else {
-      streak = 1;
+        badge = "Intermediate 🚀";
     }
 
-    localStorage.setItem("streak", streak);
-    localStorage.setItem("lastPlayedDate", today);
-  }
+    localStorage.setItem("badge", badge);
+
+    // ACTIVITY HISTORY
+    let history =
+        JSON.parse(localStorage.getItem("quizHistory")) || [];
+
+    history.push({
+        quiz: "General Quiz",
+        score: `${score}/${questions.length}`,
+        date: new Date().toLocaleDateString()
+    });
+
+    // KEEP ONLY LAST 5
+    if (history.length > 5) {
+        history.shift();
+    }
+
+    localStorage.setItem(
+        "quizHistory",
+        JSON.stringify(history)
+    );
+
+    // DAILY STREAK SYSTEM
+    const today = new Date().toLocaleDateString();
+
+    let streak =
+        parseInt(localStorage.getItem("streak")) || 0;
+
+    let lastPlayedDate =
+        localStorage.getItem("lastPlayedDate");
+
+    if (lastPlayedDate !== today) {
+
+        const yesterday = new Date();
+
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        const yesterdayDate =
+            yesterday.toLocaleDateString();
+
+        if (lastPlayedDate === yesterdayDate) {
+
+            streak++;
+
+        } else {
+
+            streak = 1;
+        }
+
+        localStorage.setItem("streak", streak);
+
+        localStorage.setItem("lastPlayedDate", today);
+    }
+
+    // UI UPDATE
+    question.innerText = "Quiz Completed 🎉";
+
+    options.innerHTML = "";
+
+    nextBtn.style.display = "none";
+
+    timer.style.display = "none";
+
+    questionCount.style.display = "none";
+
+    result.innerHTML = `
+        <h2>Quiz Completed 🎉</h2>
+        <p>Your Score: ${score}/${questions.length}</p>
+    `;
 }
 
+// NEXT BUTTON
 nextBtn.onclick = nextQuestion;
 
+// START QUIZ
 loadQuestion();
